@@ -1,17 +1,63 @@
-import React from 'react';
+import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
+// import Button from './Button'
+// import ComponentA from './ComponentA'
+// import ComponentB from './ComponentB'
 import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
-);
+function soma(a,b){
+  alert(a + b)
+}
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+// const App = () => {
+//   return(
+//     <div>
+//       Teste
+//       <Button onClick={() => soma(5,5)} name='Israel'/>
+//       <ComponentA>
+//         <ComponentB>
+//           <Button onClick={() => soma(5,5)} name='Israel'/>
+//         </ComponentB>
+//       </ComponentA>
+//     </div>
+//   )
+// }
+
+class App extends Component {
+  constructor(props){
+    super(props)
+
+    this.state = {
+      clock: 1000,
+      copo: 'água'
+    }
+  }
+
+  componentDidMount(){
+    window.setTimeout(() => {
+      this.setState({
+        copo: 'suco'
+      })
+    },3000)
+  }
+
+  alterarCopo = () => {
+    this.setState({
+      copo: 'refrigerante'
+    })
+  }
+
+  render(){
+    const { clock, copo } = this.state
+
+    return(
+      <div>
+        <h1>{clock}</h1>
+        <button onClick={() => this.alterarCopo()}>{copo}</button>
+      </div>
+    )
+  }
+}
+
+const root  = document.getElementById('root')
+ReactDOM.render(<App/>,root)

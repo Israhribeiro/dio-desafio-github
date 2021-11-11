@@ -1,11 +1,37 @@
 import styled from 'styled-components'
+import { Quotes } from '../../components'
+import narutoImg from '../../images/naruto.png'
+import { getQuote } from '../../services'
+import { useState, useEffect, useRef } from 'react'
+import jutsuSound from '../../sounds/jutsu.mp3'
+
+const audio = new Audio(jutsuSound)
 
 export function App() {
+  let isMounted = useRef(true)
+
+  const [quoteState, setQuoteState] = useState({ quote: 'Loading quote...', speaker: 'Loading speaker...' })
+
+  const onUpdate = async () => {
+    const quote = await getQuote()
+    
+    if(isMounted.current){
+      setQuoteState(quote)
+      audio.play()
+    }
+
+  }
+
+  useEffect(() => {
+    onUpdate()
+
+    return () => { isMounted.current = false }
+  }, [])
+
   return (
     <Content>
-      <img/>
-      <p>quote</p>
-      <button>Quote no Jutsu</button>
+      <Quotes {...quoteState.quote} onUpate={onUpdate}/>
+      <NarutoImg alt="naruto segurando kunai"  src={narutoImg}/>
     </Content>
   )
 }
@@ -16,5 +42,10 @@ const Content = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+`
+
+const NarutoImg = styled.img`
+  max-width: 50vw;
+  align-self: flex-end;
 `
 

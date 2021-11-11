@@ -1,3 +1,3 @@
-import { GlobalStyle } from "./globalStyle";
-
-export { GlobalStyle }
+export * from "./globalStyle";
+export * from './quotes'
+export * from './button'

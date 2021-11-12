@@ -6,7 +6,7 @@ import '@testing-library/jest-dom'
 const response = { test: 'testing' }
 
 const server = setupServer(
-    rest.get(process.env.REACT_APP_API, (req,res,ctx) => {
+    rest.get("http://127.0.0.1:5000", (req,res,ctx) => {
         return res(ctx.json(response))
     })
 )
